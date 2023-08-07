@@ -4,31 +4,37 @@ import './App.css';
 import UserList from './components/UserList';
 
 import Counter from './components/Counter'
-import Home from './components/Home'
-import Register from './components/Register'
+import Home from './pages/home'
+import Profile from './pages/profile';
+import Login from './pages/login';
+
+import Header from './components/Header'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
+import { ProductProvider } from './context/ProductContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
-
-
-  console.log(process.env, 'halo')
-
-
   return (
-    <div className="App" style={{ paddingTop: 30 }} >
-      <Register />
-      {/* <Counter /> */}
-      {/* <Home /> */}
-      {/* <UserList
-        name={"Rizal"}
-        age={10}
-        isAdmin={false}
-        location={{
-          province: "Yogyakarta",
-          city: "Jogja"
-        }}
-        dataNilai={[10, 8, 7, "9"]} /> */}
-      {/* {dataProduct.map((item) => (<div>{item.title}</div>))} */}
-    </div>
+    <AuthProvider>
+      <ProductProvider>
+        <UserProvider>
+          <Router>
+            <Header />
+
+            <Routes>
+              <Route path='/' element={<Home />}></Route>
+              <Route path='/home' element={<Home />}></Route>
+
+              <Route path='/login' element={<Login />}></Route>
+              <Route path='/profile' element={<Profile />}></Route>
+
+            </Routes>
+
+          </Router>
+        </UserProvider>
+      </ProductProvider>
+    </AuthProvider>
   );
 }
 
